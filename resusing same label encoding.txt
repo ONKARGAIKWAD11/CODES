@@ -1,0 +1,24 @@
+
+
+
+
+
+# Encoding dataframe
+def encode(Dataframe, le=None):
+    if le is None:
+        le = LabelEncoder()
+        lb_df = Dataframe.copy()
+    else:
+        lb_df = Dataframe.copy()
+
+    objList = Dataframe.select_dtypes(include="object").columns
+    for obj in objList:
+        lb_df[obj] = le.fit_transform(Dataframe[obj].astype(str))
+    
+    return lb_df, le
+
+# Encode categorical columns in transaction_data_value and df_value using LabelEncoder
+DATASET1, le = encode(DATASET1)
+DATASET2, _ = encode(DATASET2, le)  # Reuse the same LabelEncoder instance
+
+
